@@ -56,7 +56,7 @@ public class VehiculoDAO {
     }
 
     /**
-     * Consulta todos los vehículos registrados.
+     * Lista todos los vehículos registrados.
      *
      * @return Lista de vehículos
      */
@@ -95,5 +95,50 @@ public class VehiculoDAO {
         }
 
         return listaVehiculos;
+    }
+
+    /**
+     * Busca un vehículo por su ID.
+     *
+     * @param idVehiculo ID del vehículo
+     * @return Objeto Vehiculo o null
+     */
+    public Vehiculo buscarVehiculoPorId(int idVehiculo) {
+
+        String sql = "SELECT * FROM vehiculos WHERE id_vehiculo = ?";
+
+        try (
+                Connection conexion = ConexionBD.obtenerConexion();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, idVehiculo);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    Vehiculo vehiculo = new Vehiculo();
+
+                    vehiculo.setIdVehiculo(rs.getInt("id_vehiculo"));
+                    vehiculo.setPlaca(rs.getString("placa"));
+                    vehiculo.setMarca(rs.getString("marca"));
+                    vehiculo.setModelo(rs.getString("modelo"));
+                    vehiculo.setAnio(rs.getInt("anio"));
+                    vehiculo.setTipoVehiculo(rs.getString("tipo_vehiculo"));
+                    vehiculo.setIdCliente(rs.getInt("id_cliente"));
+                    vehiculo.setEstado(rs.getString("estado"));
+
+                    return vehiculo;
+                }
+            }
+
+        } catch (SQLException e) {
+
+            System.err.println("Error al buscar vehículo: "
+                    + e.getMessage());
+        }
+
+        return null;
     }
 }

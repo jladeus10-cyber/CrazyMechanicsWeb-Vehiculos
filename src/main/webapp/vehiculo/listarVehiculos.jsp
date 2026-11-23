@@ -63,6 +63,7 @@
             <th>Tipo</th>
             <th>ID Cliente</th>
             <th>Estado</th>
+            <th>Acciones</th>
         </tr>
     </thead>
 
@@ -83,6 +84,10 @@
             <td><%= vehiculo.getTipoVehiculo() %></td>
             <td><%= vehiculo.getIdCliente() %></td>
             <td><%= vehiculo.getEstado() %></td>
+            
+             <td>
+               <a href="#">Editar</a>
+             </td>
         </tr>
 
     <%
