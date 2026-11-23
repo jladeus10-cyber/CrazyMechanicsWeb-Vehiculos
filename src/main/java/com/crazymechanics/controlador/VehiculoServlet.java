@@ -60,30 +60,95 @@ public class VehiculoServlet extends HttpServlet {
 
         try {
 
-            Vehiculo vehiculo = new Vehiculo();
-
-            vehiculo.setPlaca(request.getParameter("placa"));
-            vehiculo.setMarca(request.getParameter("marca"));
-            vehiculo.setModelo(request.getParameter("modelo"));
-            vehiculo.setAnio(
-                    Integer.parseInt(request.getParameter("anio")));
-            vehiculo.setTipoVehiculo(
-                    request.getParameter("tipoVehiculo"));
-            vehiculo.setIdCliente(
-                    Integer.parseInt(request.getParameter("idCliente")));
-            vehiculo.setEstado(request.getParameter("estado"));
+            String accion = request.getParameter("accion");
 
             VehiculoDAO vehiculoDAO = new VehiculoDAO();
 
-            boolean registrado =
-                    vehiculoDAO.registrarVehiculo(vehiculo);
+            if ("actualizar".equals(accion)) {
 
-            if (registrado) {
-                response.getWriter().println(
-                        "Vehiculo registrado correctamente.");
+                Vehiculo vehiculo = new Vehiculo();
+
+                vehiculo.setIdVehiculo(
+                        Integer.parseInt(
+                                request.getParameter("idVehiculo")));
+
+                vehiculo.setPlaca(
+                        request.getParameter("placa"));
+
+                vehiculo.setMarca(
+                        request.getParameter("marca"));
+
+                vehiculo.setModelo(
+                        request.getParameter("modelo"));
+
+                vehiculo.setAnio(
+                        Integer.parseInt(
+                                request.getParameter("anio")));
+
+                vehiculo.setTipoVehiculo(
+                        request.getParameter("tipoVehiculo"));
+
+                vehiculo.setIdCliente(
+                        Integer.parseInt(
+                                request.getParameter("idCliente")));
+
+                vehiculo.setEstado(
+                        request.getParameter("estado"));
+
+                boolean actualizado =
+                        vehiculoDAO.actualizarVehiculo(vehiculo);
+
+                if (actualizado) {
+
+                    response.sendRedirect(
+                            "VehiculoServlet");
+
+                } else {
+
+                    response.getWriter().println(
+                            "No fue posible actualizar el vehiculo.");
+                }
+
             } else {
-                response.getWriter().println(
-                        "No fue posible registrar el vehiculo.");
+
+                Vehiculo vehiculo = new Vehiculo();
+
+                vehiculo.setPlaca(
+                        request.getParameter("placa"));
+
+                vehiculo.setMarca(
+                        request.getParameter("marca"));
+
+                vehiculo.setModelo(
+                        request.getParameter("modelo"));
+
+                vehiculo.setAnio(
+                        Integer.parseInt(
+                                request.getParameter("anio")));
+
+                vehiculo.setTipoVehiculo(
+                        request.getParameter("tipoVehiculo"));
+
+                vehiculo.setIdCliente(
+                        Integer.parseInt(
+                                request.getParameter("idCliente")));
+
+                vehiculo.setEstado(
+                        request.getParameter("estado"));
+
+                boolean registrado =
+                        vehiculoDAO.registrarVehiculo(vehiculo);
+
+                if (registrado) {
+
+                    response.getWriter().println(
+                            "Vehiculo registrado correctamente.");
+
+                } else {
+
+                    response.getWriter().println(
+                            "No fue posible registrar el vehiculo.");
+                }
             }
 
         } catch (Exception e) {

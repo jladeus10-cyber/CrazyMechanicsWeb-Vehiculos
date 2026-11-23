@@ -16,7 +16,12 @@ Vehiculo vehiculo =
 
 <h2>Editar Vehículo</h2>
 
-<form>
+<form action="/CrazyMechanicsWeb/VehiculoServlet"
+      method="post">
+
+    <input type="hidden"
+           name="accion"
+           value="actualizar">
 
     <input type="hidden"
            name="idVehiculo"
@@ -25,47 +30,54 @@ Vehiculo vehiculo =
     <label>Placa:</label>
     <input type="text"
            name="placa"
-           value="<%= vehiculo.getPlaca() %>">
+           value="<%= vehiculo.getPlaca() %>"
+           required>
     <br><br>
 
     <label>Marca:</label>
     <input type="text"
            name="marca"
-           value="<%= vehiculo.getMarca() %>">
+           value="<%= vehiculo.getMarca() %>"
+           required>
     <br><br>
 
     <label>Modelo:</label>
     <input type="text"
            name="modelo"
-           value="<%= vehiculo.getModelo() %>">
+           value="<%= vehiculo.getModelo() %>"
+           required>
     <br><br>
 
     <label>Año:</label>
     <input type="number"
            name="anio"
-           value="<%= vehiculo.getAnio() %>">
+           value="<%= vehiculo.getAnio() %>"
+           required>
     <br><br>
 
     <label>Tipo:</label>
     <input type="text"
            name="tipoVehiculo"
-           value="<%= vehiculo.getTipoVehiculo() %>">
+           value="<%= vehiculo.getTipoVehiculo() %>"
+           required>
     <br><br>
 
     <label>ID Cliente:</label>
     <input type="number"
            name="idCliente"
-           value="<%= vehiculo.getIdCliente() %>">
+           value="<%= vehiculo.getIdCliente() %>"
+           required>
     <br><br>
 
     <label>Estado:</label>
     <input type="text"
            name="estado"
-           value="<%= vehiculo.getEstado() %>">
+           value="<%= vehiculo.getEstado() %>"
+           required>
     <br><br>
 
     <button type="submit">
-        Actualizar
+        Actualizar Vehículo
     </button>
 
 </form>
