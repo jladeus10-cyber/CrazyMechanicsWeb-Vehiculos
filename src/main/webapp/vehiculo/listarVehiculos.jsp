@@ -84,10 +84,12 @@
             <td><%= vehiculo.getTipoVehiculo() %></td>
             <td><%= vehiculo.getIdCliente() %></td>
             <td><%= vehiculo.getEstado() %></td>
-            
+
              <td>
-               <a href="#">Editar</a>
-             </td>
+             <a href="VehiculoServlet?accion=editar&id=<%= vehiculo.getIdVehiculo() %>">
+             Editar
+             </a>
+</td>
         </tr>
 
     <%

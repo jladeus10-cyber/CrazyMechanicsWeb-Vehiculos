@@ -101,7 +101,7 @@ public class VehiculoDAO {
      * Busca un vehículo por su ID.
      *
      * @param idVehiculo ID del vehículo
-     * @return Objeto Vehiculo o null
+     * @return Vehículo encontrado o null
      */
     public Vehiculo buscarVehiculoPorId(int idVehiculo) {
 
@@ -140,5 +140,50 @@ public class VehiculoDAO {
         }
 
         return null;
+    }
+
+    /**
+     * Actualiza un vehículo existente.
+     *
+     * @param vehiculo vehículo con los nuevos datos
+     * @return true si se actualizó correctamente
+     */
+    public boolean actualizarVehiculo(Vehiculo vehiculo) {
+
+        String sql = """
+                UPDATE vehiculos
+                SET placa = ?,
+                    marca = ?,
+                    modelo = ?,
+                    anio = ?,
+                    tipo_vehiculo = ?,
+                    id_cliente = ?,
+                    estado = ?
+                WHERE id_vehiculo = ?
+                """;
+
+        try (
+                Connection conexion = ConexionBD.obtenerConexion();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, vehiculo.getPlaca());
+            ps.setString(2, vehiculo.getMarca());
+            ps.setString(3, vehiculo.getModelo());
+            ps.setInt(4, vehiculo.getAnio());
+            ps.setString(5, vehiculo.getTipoVehiculo());
+            ps.setInt(6, vehiculo.getIdCliente());
+            ps.setString(7, vehiculo.getEstado());
+            ps.setInt(8, vehiculo.getIdVehiculo());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+
+            System.err.println("Error al actualizar vehículo: "
+                    + e.getMessage());
+
+            return false;
+        }
     }
 }

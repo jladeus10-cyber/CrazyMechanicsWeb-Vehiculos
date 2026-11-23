@@ -12,14 +12,46 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * Servlet encargado de gestionar las operaciones
- * relacionadas con los vehículos.
- */
 @WebServlet("/VehiculoServlet")
 public class VehiculoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String accion = request.getParameter("accion");
+
+        VehiculoDAO vehiculoDAO = new VehiculoDAO();
+
+        if ("editar".equals(accion)) {
+
+            int idVehiculo =
+                    Integer.parseInt(request.getParameter("id"));
+
+            Vehiculo vehiculo =
+                    vehiculoDAO.buscarVehiculoPorId(idVehiculo);
+
+            request.setAttribute("vehiculo", vehiculo);
+
+            request.getRequestDispatcher(
+                    "/vehiculo/editarVehiculo.jsp")
+                    .forward(request, response);
+
+        } else {
+
+            List<Vehiculo> listaVehiculos =
+                    vehiculoDAO.listarVehiculos();
+
+            request.setAttribute("vehiculos", listaVehiculos);
+
+            request.getRequestDispatcher(
+                    "/vehiculo/listarVehiculos.jsp")
+                    .forward(request, response);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -43,7 +75,8 @@ public class VehiculoServlet extends HttpServlet {
 
             VehiculoDAO vehiculoDAO = new VehiculoDAO();
 
-            boolean registrado = vehiculoDAO.registrarVehiculo(vehiculo);
+            boolean registrado =
+                    vehiculoDAO.registrarVehiculo(vehiculo);
 
             if (registrado) {
                 response.getWriter().println(
@@ -61,21 +94,5 @@ public class VehiculoServlet extends HttpServlet {
                     "Error al procesar la solicitud: "
                             + e.getMessage());
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-
-        VehiculoDAO vehiculoDAO = new VehiculoDAO();
-
-        List<Vehiculo> listaVehiculos = vehiculoDAO.listarVehiculos();
-
-        request.setAttribute("vehiculos", listaVehiculos);
-
-        request.getRequestDispatcher(
-                "/vehiculo/listarVehiculos.jsp")
-                .forward(request, response);
     }
 }
