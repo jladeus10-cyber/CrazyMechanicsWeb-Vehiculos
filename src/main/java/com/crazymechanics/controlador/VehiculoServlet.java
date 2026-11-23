@@ -1,6 +1,7 @@
 package com.crazymechanics.controlador;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.crazymechanics.dao.VehiculoDAO;
 import com.crazymechanics.modelo.Vehiculo;
@@ -60,5 +61,21 @@ public class VehiculoServlet extends HttpServlet {
                     "Error al procesar la solicitud: "
                             + e.getMessage());
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+
+        VehiculoDAO vehiculoDAO = new VehiculoDAO();
+
+        List<Vehiculo> listaVehiculos = vehiculoDAO.listarVehiculos();
+
+        request.setAttribute("vehiculos", listaVehiculos);
+
+        request.getRequestDispatcher(
+                "/vehiculo/listarVehiculos.jsp")
+                .forward(request, response);
     }
 }
