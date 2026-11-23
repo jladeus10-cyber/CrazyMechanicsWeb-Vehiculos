@@ -10,8 +10,8 @@
 
     <h2>Registrar Vehículo</h2>
 
-    <form action="${pageContext.request.contextPath}/VehiculoServlet"
-          method="post">
+    <form action="/CrazyMechanicsWeb/VehiculoServlet"
+      method="post">
 
         <label>Placa:</label>
         <input type="text" name="placa" required>
