@@ -86,10 +86,17 @@
             <td><%= vehiculo.getEstado() %></td>
 
              <td>
-             <a href="VehiculoServlet?accion=editar&id=<%= vehiculo.getIdVehiculo() %>">
-             Editar
-             </a>
-</td>
+    <a href="VehiculoServlet?accion=editar&id=<%= vehiculo.getIdVehiculo() %>">
+        Editar
+    </a>
+
+    |
+
+       <a href="VehiculoServlet?accion=eliminar&id=<%= vehiculo.getIdVehiculo() %>"
+       onclick="return confirm('¿Está seguro de eliminar este vehículo?');">
+        Eliminar
+        </a>
+           </td>
         </tr>
 
     <%

@@ -28,30 +28,48 @@ public class VehiculoServlet extends HttpServlet {
 
         if ("editar".equals(accion)) {
 
-            int idVehiculo =
-                    Integer.parseInt(request.getParameter("id"));
+    int idVehiculo =
+            Integer.parseInt(request.getParameter("id"));
 
-            Vehiculo vehiculo =
-                    vehiculoDAO.buscarVehiculoPorId(idVehiculo);
+    Vehiculo vehiculo =
+            vehiculoDAO.buscarVehiculoPorId(idVehiculo);
 
-            request.setAttribute("vehiculo", vehiculo);
+    request.setAttribute("vehiculo", vehiculo);
 
-            request.getRequestDispatcher(
-                    "/vehiculo/editarVehiculo.jsp")
-                    .forward(request, response);
+    request.getRequestDispatcher(
+            "/vehiculo/editarVehiculo.jsp")
+            .forward(request, response);
 
-        } else {
+} else if ("eliminar".equals(accion)) {
 
-            List<Vehiculo> listaVehiculos =
-                    vehiculoDAO.listarVehiculos();
+    int idVehiculo =
+            Integer.parseInt(request.getParameter("id"));
 
-            request.setAttribute("vehiculos", listaVehiculos);
+    boolean eliminado =
+            vehiculoDAO.eliminarVehiculo(idVehiculo);
 
-            request.getRequestDispatcher(
-                    "/vehiculo/listarVehiculos.jsp")
-                    .forward(request, response);
-        }
+    if (eliminado) {
+
+        response.sendRedirect("VehiculoServlet");
+
+    } else {
+
+        response.getWriter().println(
+                "No fue posible eliminar el vehiculo.");
     }
+
+} else {
+
+    List<Vehiculo> listaVehiculos =
+            vehiculoDAO.listarVehiculos();
+
+    request.setAttribute("vehiculos", listaVehiculos);
+
+    request.getRequestDispatcher(
+            "/vehiculo/listarVehiculos.jsp")
+            .forward(request, response);
+   }
+}
 
     @Override
     protected void doPost(HttpServletRequest request,

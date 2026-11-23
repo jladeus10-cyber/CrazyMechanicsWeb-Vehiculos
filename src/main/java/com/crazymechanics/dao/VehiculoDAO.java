@@ -186,4 +186,31 @@ public class VehiculoDAO {
             return false;
         }
     }
+/**
+ * Elimina un vehículo por su ID.
+ *
+ * @param idVehiculo ID del vehículo
+ * @return true si se eliminó correctamente
+ */
+public boolean eliminarVehiculo(int idVehiculo) {
+
+    String sql = "DELETE FROM vehiculos WHERE id_vehiculo = ?";
+
+    try (
+            Connection conexion = ConexionBD.obtenerConexion();
+            PreparedStatement ps = conexion.prepareStatement(sql)
+    ) {
+
+        ps.setInt(1, idVehiculo);
+
+        return ps.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+
+        System.err.println("Error al eliminar vehículo: "
+                + e.getMessage());
+
+        return false;
+    }
+}
 }
